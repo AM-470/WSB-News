@@ -11,7 +11,7 @@ def get_news_posts():
         posts = []
         
         for post in profile.get_posts():
-            if len(post.caption.split()) > 10:  # Filter posts with more than 10 words
+            if len(post.caption.split()) > 3:  # Filter posts with more than 10 words
                 posts.append({
                     'image': post.url,
                     'caption': post.caption
