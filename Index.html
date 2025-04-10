@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WSB News Feed</title>
+  <style>
+    body { font-family: Arial; background: #111; color: #fff; padding: 20px; }
+    .post { margin-bottom: 30px; border-bottom: 1px solid #444; padding-bottom: 15px; }
+    img { max-width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>Wall Street Bets – News Posts</h1>
+  {% for post in posts %}
+    <div class="post">
+      <a href="{{ post.url }}" target="_blank">
+        <img src="{{ post.thumbnail_url }}" alt="Post Image">
+      </a>
+      <p>{{ post.caption }}</p>
+    </div>
+  {% endfor %}
+</body>
+</html>
