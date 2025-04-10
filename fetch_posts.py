@@ -17,7 +17,7 @@ def get_news_posts():
                 })
             
             # Limit the number of posts to display (e.g., 5 recent posts)
-            if len(posts) >= 5:
+            if len(posts) >= 1:
                 break
             
             # Delay to avoid hitting Instagram rate limits
