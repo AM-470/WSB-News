@@ -1,31 +1,26 @@
 import instaloader
-import time
 
-def get_news_posts():
+def check_for_news():
     L = instaloader.Instaloader()
 
+    # Login if necessary (optional)
+    # L.login("your_username", "your_password")  # Uncomment if login is needed
+
     try:
-        # Load profile and fetch recent posts
+        # Fetch the profile and get the most recent post
         profile = instaloader.Profile.from_username(L.context, "wallstreetbets")
-        posts = []
-        
-        for post in profile.get_posts():
-            if len(post.caption.split()) > 10:  # Filter posts with more than 10 words
-                posts.append({
-                    'image': post.url,
-                    'caption': post.caption
-                })
-            
-            # Limit the number of posts to display, e.g., 5 recent posts
-            if len(posts) >= 5:
-                break
+        recent_post = next(profile.get_posts())  # This gets the most recent post
 
-        return posts
-
-    except instaloader.exceptions.ConnectionException as e:
-        print(f"Connection Error: {e}")
-        return []  # Return an empty list if there is a connection issue
+        # Check if the post's caption contains more than 10 words (assuming news posts are longer)
+        if len(recent_post.caption.split()) > 10:
+            return "There is news!"
+        else:
+            return "No news."
 
     except Exception as e:
-        print(f"An error occurred: {e}")
-        return []
+        print(f"Error: {e}")
+        return "An error occurred."
+
+# Test the function
+result = check_for_news()
+print(result)
