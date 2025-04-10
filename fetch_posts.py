@@ -1,19 +1,31 @@
 import instaloader
+import time
 
-def get_news_posts(username='wallstreetbets', limit=10, min_words=10):
+def get_news_posts():
     L = instaloader.Instaloader()
-    profile = instaloader.Profile.from_username(L.context, username)
-    posts = profile.get_posts()
 
-    news_posts = []
-    for post in posts:
-        if post.caption:
-            if len(post.caption.split()) >= min_words:
-                news_posts.append({
-                    'url': post.url,
-                    'caption': post.caption,
-                    'thumbnail_url': post.url
+    try:
+        # Load profile and fetch recent posts
+        profile = instaloader.Profile.from_username(L.context, "wallstreetbets")
+        posts = []
+        
+        for post in profile.get_posts():
+            if len(post.caption.split()) > 10:  # Filter posts with more than 10 words
+                posts.append({
+                    'image': post.url,
+                    'caption': post.caption
                 })
-        if len(news_posts) >= limit:
-            break
-    return news_posts
+            
+            # Limit the number of posts to display, e.g., 5 recent posts
+            if len(posts) >= 5:
+                break
+
+        return posts
+
+    except instaloader.exceptions.ConnectionException as e:
+        print(f"Connection Error: {e}")
+        return []  # Return an empty list if there is a connection issue
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return []
