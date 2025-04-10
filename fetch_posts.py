@@ -1,5 +1,6 @@
 import instaloader
 import time
+import random  # Import random module
 
 def get_news_posts():
     L = instaloader.Instaloader()
@@ -16,12 +17,14 @@ def get_news_posts():
                     'caption': post.caption
                 })
             
-            # Limit the number of posts to display (e.g., 5 recent posts)
-            if len(posts) >= 4:
+            # Limit the number of posts to 4
+            if len(posts) >= 4:  # Fetch top 4 posts
                 break
             
-            # Delay to avoid hitting Instagram rate limits
-            time.sleep(10)  # Sleep for 5 seconds between requests to avoid rate-limiting
+            # Random delay between 13 and 55 seconds
+            delay = random.randint(13, 55)  # Generate a random delay
+            print(f"Waiting for {delay} seconds...")  # Optional: Print the delay time
+            time.sleep(delay)  # Sleep for the random delay
 
         return posts
 
